@@ -61,6 +61,13 @@ export default {
     },
     getRating(movie){
       console.log(movie)
+      try {
+        let response = await axios.get("/api/ratings/");
+        this.items = response.data;
+        return true;
+      } catch (error) {
+        this.errors.push(error)
+      }
       //todo: call backend to get the average movie rating
       return 5
     }
