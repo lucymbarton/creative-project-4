@@ -2,15 +2,20 @@
 <div class="wrapper">
   <div v-if="!isMovieSelected" class="products">
 
-    <div class="product" v-for="movie in movies" :key="movie.number">
+    <div class="product" v-for="movie in movies" :key="movie.number" style="padding-right: 100px;">
     <div v-on:click.capture="showMovieInfo(movie)" class="info">
       <!-- todo: make this a click -->
       <h1>{{movie.name}}</h1>
       <p>{{ movie.releaseDate }}</p>
     </div>
     <div class="image">
-      <img :src="'/images/'+movie.image">
+      <img :src="'images/'+movie.image">
     </div>
+
+    <div style="width: 50%;">
+      <StarRating style="width: 50%" :rating="getRating(movie.name)" :read-only="true"></StarRating>
+    </div>
+    
     </div>
   </div>
   <span v-else>
@@ -25,11 +30,13 @@
 
 <script>
 import SingleMovieView from './SingleMovieView.vue'
+import StarRating from 'vue-star-rating'
 
 export default {
   name: 'MovieList',
   components: {
-    SingleMovieView
+    SingleMovieView,
+    StarRating
   },
   props: {
     movies: Array
@@ -51,6 +58,11 @@ export default {
     back(){
       this.isMovieSelected = false;
       this.selectedMovie = {};
+    },
+    getRating(movie){
+      console.log(movie)
+      //todo: call backend to get the average movie rating
+      return 5
     }
   }
 }
