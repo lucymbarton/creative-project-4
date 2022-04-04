@@ -12,13 +12,6 @@
         <StarRating @rating-selected ="setRating"></StarRating>
       </div>
     </div>
-    
-    
-
-    
-    
-
-
   </div>
   
   
@@ -41,32 +34,29 @@ p {
 }
 </style>
 <script>
+import axios from 'axios';
 import StarRating from 'vue-star-rating'
-
 export default {
-  name: 'Single-Movie-Comp',
-  props: {
-      movie: Object
-  },
   components: {
     StarRating
   },
-
-  
-  // data() {
-  //   return {
-  //     country: '',
-  //   }
-  // },
   computed: {
     movies() {
       return this.$root.$data.movies
     }, 
-    
   },
   methods: {
     setRating(rating){
-        //todo: call backend to add rating to this specific movie object
+        try {
+            const formData = new FormData();
+            let r2 = await axios.post('/api/items', {
+              movie: r1.data.movie,
+              rating: r1.data.StarRating,
+            });
+            this.addItem = r2.data;
+          } catch (error) {
+          console.log(error);
+      }
     }
   }
 }
