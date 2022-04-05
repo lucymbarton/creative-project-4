@@ -50,8 +50,6 @@ export default {
   },
   methods: {
     async setRating(rating){
-      console.log(this.movie)
-      console.log(rating)
         try {
           
             let r2 = await axios.post('/api/items', {
