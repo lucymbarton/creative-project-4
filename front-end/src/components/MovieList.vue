@@ -13,7 +13,7 @@
     </div>
 
     <div style="width: 50%;">
-      <StarRating style="width: 50%" :rating="getRating(movie.movie)" :read-only="true"></StarRating>
+      <StarRating :key="key" style="width: 50%" :rating="getRating(movie.movie)" :read-only="true"></StarRating>
     </div>
     
     </div>
@@ -50,7 +50,9 @@ export default {
       isMovieSelected: false,
       selectedMovie: {},
       items: {},
-      errors: []
+      errors: [],
+      ratingsMap: new Map(),
+      key: 0
     }
   },
   methods : {
@@ -68,21 +70,76 @@ export default {
     },
     async getRatings(){
       try {
-        console.log("getting ratings")
         let response = await axios.get("/api/ratings/");
         this.items = response.data;
-        console.log(this.items)
-        return true;
       } catch (error) {
         console.log(error)
         this.errors.push(error)
       }
-      //todo: call backend to get the average movie rating
-      return 5
+    
+      let movie1Ratings = []
+      let movie2Ratings = []
+      let movie3Ratings = []
+      let movie4Ratings = []
+      let movie5Ratings = []
+      let movie6Ratings = []
+      let movie7Ratings = []
+      let movie8Ratings = []
+
+      for(let item of this.items){
+          if(item.title){
+            console.log(item)
+             switch (item.title) {
+               case 1:
+                 movie1Ratings.push(item.rating)
+                 continue
+                case 2:
+                  movie2Ratings.push(item.rating)
+                  continue
+                case 3:
+                  movie3Ratings.push(item.rating)
+                  continue
+                case 4:
+                  movie4Ratings.push(item.rating)
+                  continue
+                case 5:
+                  movie5Ratings.push(item.rating)
+                  continue
+                case 6:
+                  movie6Ratings.push(item.rating)
+                  continue
+                case 7:
+                  movie7Ratings.push(item.rating)
+                  continue
+                case 8:
+                  movie8Ratings.push(item.rating)
+                  continue
+                default:
+                  this.errors.push('error')
+             }
+          }
+      }
+
+      let allMovies = [movie1Ratings, movie2Ratings, movie3Ratings, movie4Ratings, movie5Ratings, movie6Ratings, movie7Ratings, movie8Ratings]
+
+      for(let i = 0; i < allMovies.length; i++){
+        if(allMovies[i].length === 0){
+          this.ratingsMap.set(i+1, 0)
+        } else {
+          let sum = 0
+          for(let rating of allMovies[i]){
+            sum += rating
+          }
+          let average = Math.round(sum / allMovies[i].length)
+          this.ratingsMap.set(i+1, average)
+        }
+      }
+      this.key++
+      
     },
     getRating(movieNumber){
-
-      return movieNumber
+      console.log(this.ratingsMap.get(movieNumber))
+      return this.ratingsMap.get(movieNumber)
     }
   }
 }

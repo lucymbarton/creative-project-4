@@ -25,10 +25,12 @@ const Item = mongoose.model('Rating', itemSchema);
 //Create a rating for a movie
 app.post('/api/items', async (req, res) => {
   console.log('inside post')
+  console.log(req.body)
   const item = new Item({
-    title: req.body.title,
+    title: req.body.movie,
     rating: req.body.rating,
   });
+  console.log(item)
   try {
     await item.save();
     res.send(item);
