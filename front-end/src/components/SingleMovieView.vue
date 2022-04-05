@@ -46,7 +46,7 @@ export default {
     }, 
   },
   methods: {
-    setRating(rating){
+    async setRating(rating){
         try {
             const formData = new FormData();
             let r2 = await axios.post('/api/items', {

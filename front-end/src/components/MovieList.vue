@@ -41,10 +41,14 @@ export default {
   props: {
     movies: Array
   },
+  created() {
+    this.getRatings()
+  },
   data() {
     return {
       isMovieSelected: false,
-      selectedMovie: {}
+      selectedMovie: {},
+      items: {}
     }
   },
   methods : {
@@ -59,11 +63,11 @@ export default {
       this.isMovieSelected = false;
       this.selectedMovie = {};
     },
-    getRating(movie){
-      console.log(movie)
+    async getRatings(){
       try {
         let response = await axios.get("/api/ratings/");
         this.items = response.data;
+        console.log(this.items)
         return true;
       } catch (error) {
         this.errors.push(error)
