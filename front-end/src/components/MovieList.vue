@@ -88,7 +88,6 @@ export default {
 
       for(let item of this.items){
           if(item.title){
-            console.log(item)
              switch (item.title) {
                case 1:
                  movie1Ratings.push(item.rating)
@@ -138,7 +137,6 @@ export default {
       
     },
     getRating(movieNumber){
-      console.log(this.ratingsMap.get(movieNumber))
       return this.ratingsMap.get(movieNumber)
     }
   }
