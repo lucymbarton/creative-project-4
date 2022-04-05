@@ -13,7 +13,7 @@
     </div>
 
     <div style="width: 50%;">
-      <StarRating style="width: 50%" :rating="getRating(movie.name)" :read-only="true"></StarRating>
+      <StarRating style="width: 50%" :rating="getRating(movie.movie)" :read-only="true"></StarRating>
     </div>
     
     </div>
@@ -31,6 +31,7 @@
 <script>
 import SingleMovieView from './SingleMovieView.vue'
 import StarRating from 'vue-star-rating'
+import axios from 'axios';
 
 export default {
   name: 'MovieList',
@@ -48,7 +49,8 @@ export default {
     return {
       isMovieSelected: false,
       selectedMovie: {},
-      items: {}
+      items: {},
+      errors: []
     }
   },
   methods : {
@@ -60,20 +62,27 @@ export default {
       this.isMovieSelected = true;
     },
     back(){
+      this.getRatings();
       this.isMovieSelected = false;
       this.selectedMovie = {};
     },
     async getRatings(){
       try {
+        console.log("getting ratings")
         let response = await axios.get("/api/ratings/");
         this.items = response.data;
         console.log(this.items)
         return true;
       } catch (error) {
+        console.log(error)
         this.errors.push(error)
       }
       //todo: call backend to get the average movie rating
       return 5
+    },
+    getRating(movieNumber){
+
+      return movieNumber
     }
   }
 }

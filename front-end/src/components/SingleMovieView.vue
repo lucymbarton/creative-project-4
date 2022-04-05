@@ -40,6 +40,9 @@ export default {
   components: {
     StarRating
   },
+  props: {
+    movie: Object
+  },
   computed: {
     movies() {
       return this.$root.$data.movies
@@ -47,13 +50,15 @@ export default {
   },
   methods: {
     async setRating(rating){
+      console.log(this.movie)
+      console.log(rating)
         try {
-            const formData = new FormData();
+          
             let r2 = await axios.post('/api/items', {
-              movie: r1.data.movie,
-              rating: r1.data.StarRating,
+              movie: this.movie.movie,
+              rating: rating,
             });
-            this.addItem = r2.data;
+            
           } catch (error) {
           console.log(error);
       }

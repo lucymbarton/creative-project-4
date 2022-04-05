@@ -24,6 +24,7 @@ const Item = mongoose.model('Rating', itemSchema);
 
 //Create a rating for a movie
 app.post('/api/items', async (req, res) => {
+  console.log('inside post')
   const item = new Item({
     title: req.body.title,
     rating: req.body.rating,
@@ -39,8 +40,9 @@ app.post('/api/items', async (req, res) => {
 
 
 //Get all the ratings for a movie
-app.get('/api/items', async (req, res) => {
+app.get('/api/ratings', async (req, res) => {
   try {
+    console.log('Getting items')
     let items = await Item.find();
     res.send(items);
   } catch (error) {
