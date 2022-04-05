@@ -7,7 +7,7 @@
     <router-view/>
     <div class="git">
     <footer style="width: 100%; height: auto; text-align: center; padding-top:100px;">
-      <a href="https://github.com/lucymbarton/creative3"><img :src="'/images/github-logo.png'"></a>
+      <a href="https://github.com/lucymbarton/creative-project-4"><img :src="'/images/github-logo.png'"></a>
       <p style="font-size:12px;"> Alec Burnett & Lucy Barton </p>
     </footer>
     </div>
